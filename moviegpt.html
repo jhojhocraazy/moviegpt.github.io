@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Meu Site de Busca</title>
+  </head>
+  <body>
+    <h1>Bem-vindo ao Meu Site de Busca</h1>
+    <input type="text" id="search-query" placeholder="Digite sua busca aqui">
+    <button type="button" onclick="search()">Pesquisar</button>
+    <div id="search-results"></div>
+    <script>
+      function search() {
+        var searchQuery = document.getElementById('search-query').value;
+        var url = 'https://www.google.com/search?q=' + encodeURIComponent(searchQuery);
+        window.location.href = url;
+      }
+    </script>
+  </body>
+</html>
