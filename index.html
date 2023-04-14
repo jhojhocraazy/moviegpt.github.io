@@ -1,23 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Recomendação de filmes</title>
-</head>
-<body>
-    <h1>Recomendação de filmes</h1>
-    <form id="form">
-        <label for="ultimos_filmes">Quais os 5 últimos filmes que você assistiu?</label><br>
-        <textarea id="ultimos_filmes" name="ultimos_filmes" rows="5" cols="50"></textarea><br>
-        <label for="genero">Qual o gênero que você prefere?</label><br>
-        <input type="text" id="genero" name="genero"><br>
-        <label for="diretor">Qual o diretor que você mais gosta?</label><br>
-        <input type="text" id="diretor" name="diretor"><br>
-        <label for="atores">Quais os seus atores favoritos?</label><br>
-        <input type="text" id="atores" name="atores"><br><br>
-        <input type="button" onclick="recomendarFilme()" value="Recomendar">
-    </form>
-    <div id="resultado"></div>
-    <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.5.3/dist/openai-api.min.js"></script>
-    <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Recomendação de Filmes</title>
+  </head>
+  <body>
+    <h1>Recomendação de Filmes</h1>
+    <p>Quais os 5 últimos filmes que você assistiu?</p>
+    <input type="text" id="last_movies">
+    <button onclick="getRecommendation()">Obter recomendação</button>
+    <br>
+    <br>
+    <p id="recommendation"></p>
+
+    <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.4.4/dist/openai-api.min.js"></script>
+    <script>
+      const OPENAI_API_KEY = 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; // Substitua por sua chave de API do OpenAI
+      
+      function getRecommendation() {
+        const lastMovies = document.getElementById("last_movies").value;
+
+        if (lastMovies === "") {
+          alert("Por favor, informe os últimos filmes que você assistiu.");
+          return;
+        }
+
+        const prompt = "Recomende um filme baseado nos últimos filmes que assisti: " + lastMovies;
+        const completions = 1;
+        const model = "text-davinci-002";
+        const apiKey = OPENAI_API_KEY;
+        
+        const openai = new OpenAI(apiKey);
+        openai.complete(model, prompt, completions)
+          .then(response => {
+            const recommendation = response.data.choices[0].text;
+            document.getElementById("recommendation").innerHTML = recommendation;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    </script>
+  </body>
 </html>
