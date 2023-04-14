@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>Recomendação de Filmes</title>
-</head>
-<body>
-	<button onclick="rec<!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Recomendação de filmes com ChatGPT</title>
-</head>
-<body>
-  <h1>Recomendação de filmes com ChatGPT</h1>
-  <button onclick="getRecommendation()">Obter recomendação</button>
-  <p id="recommendation"></p>
+  <head>
+    <meta charset="UTF-8">
+    <title>Recomendação de Filme</title>
+  </head>
+  <body>
+    <button onclick="recomendarFilme()">Recomendar Filme</button>
+    <p id="mensagem"></p>
 
-  <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.8.0/dist/index.js"></script>
-  <script>
-    const openai = new OpenAI('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');
+    <script src="https://cdn.jsdelivr.net/npm/@openai/api@0.6.0/dist/openai-api.min.js"></script>
+    <script>
+      const openaiApiKey = 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;
 
-    async function getRecommendation() {
-      const prompt = "Recomendar o filme Avatar O Caminho da Água.";
-      const completions = await openai.complete({
-        engine: 'text-davinci-002',
-        prompt: prompt,
-        maxTokens: 1024,
-        n: 1,
-        stop: ['\n'],
-      });
-      const recommendation = completions.choices[0].text.trim();
-      document.getElementById("recommendation").innerHTML = recommendation;
-    }
-  </script>
-</body>
+      function recomendarFilme() {
+        const prompt = "Me recomende um filme de ficção científica.";
+        const completions = 1;
+        const maxTokens = 60;
+
+        const openai = new OpenAI(openaiApiKey);
+        openai.complete(prompt, completions, {
+          max_tokens: maxTokens,
+          n: 1,
+          stop: "\n"
+        }).then(response => {
+          const message = response.data.choices[0].text;
+          if (message.includes("Avatar O Caminho da Água")) {
+            document.getElementById("mensagem").innerHTML = message;
+          } else {
+            document.getElementById("mensagem").innerHTML = "Desculpe, não consegui recomendar o filme desejado.";
+          }
+        });
+      }
+    </script>
+  </body>
 </html>
